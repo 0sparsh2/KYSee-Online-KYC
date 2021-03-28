@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>OTP Verification</title>
+	<link rel="icon" href="../img/logo.jpeg" type="image/icon type">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+
+	<!--google fonts-->
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+
+	<!--css-->
+	<style type="text/css">
+
+		body {
+		      background-color: #293241;
+		      display: flex;
+		      align-items: center;
+		      justify-content: center;
+		      flex-direction: column;
+		      color: #fff;
+		}
+		.digit-group input[type=text] {
+				width: 30px;
+				height: 50px;
+				background-color: lighten(#293241, 5%);
+				border: none;
+				line-height: 50px;
+				text-align: center;
+				font-size: 24px;
+				font-weight: 200;
+				margin: 0 2px;
+			}
+
+		.prompt {
+			margin-bottom: 20px;
+			font-size: 20px;
+		}
+	</style>
+	<link rel="stylesheet" type="text/css" href="../css/kyc.css">
+
+
+	
+
+</head>
+<body>
+	<H4>Step 2 of 8</H4>
+	<h1>OTP VERIFICATION</h1>
+	<div class="prompt">
+		Enter the OTP sent to your EMAIL ID below to proceed!
+	</div>
+
+	<form method="get" class="digit-group" data-group-name="digits" data-autosubmit="false" autocomplete="off">
+		<input type="text" id="digit-1" name="digit-1" data-next="digit-2" />
+		<input type="text" id="digit-2" name="digit-2" data-next="digit-3" data-previous="digit-1" />
+		<input type="text" id="digit-3" name="digit-3" data-next="digit-4" data-previous="digit-2" />
+		<input type="text" id="digit-4" name="digit-4" data-next="digit-5" data-previous="digit-3" />
+		<br>
+		<input type="submit" value="Confirm OTP">
+	</form>
+
+	<!--js-->
+	<script type="text/javascript">
+		$('.digit-group').find('input').each(function() {
+	$(this).attr('maxlength', 1);
+	$(this).on('keyup', function(e) {
+		var parent = $($(this).parent());
+		
+		if(e.keyCode === 8 || e.keyCode === 37) {
+			var prev = parent.find('input#' + $(this).data('previous'));
+			
+			if(prev.length) {
+				$(prev).select();
+			}
+		} else if((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 96 && e.keyCode <= 105) || e.keyCode === 39) {
+			var next = parent.find('input#' + $(this).data('next'));
+			
+			if(next.length) {
+				$(next).select();
+			} else {
+				if(parent.data('autosubmit')) {
+					parent.submit();
+				}
+			}
+		}
+	});
+});
+	</script>
+</body>
+</html>
